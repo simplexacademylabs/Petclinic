@@ -70,6 +70,12 @@ public abstract class AbstractClinicServiceTests {
         assertThat(owner.getLastName()).startsWith("Franklin");
         assertThat(owner.getPets().size()).isEqualTo(1);
     }
+    
+    @Test
+    public void shouldReturnAllOwnersInCaseLastNameIsEmpty() {
+        Collection<Owner> owners = this.clinicService.findOwnerByLastName("");
+        assertThat(owners).extracting("lastName").contains("Davis", "Franklin");        
+    }
 
     @Test
     @Transactional
@@ -148,7 +154,7 @@ public abstract class AbstractClinicServiceTests {
 
 	@Test
 	@Transactional
-	public void sholdUpdatePetName() throws Exception {
+	public void shouldUpdatePetName() throws Exception {
 	    Pet pet7 = this.clinicService.findPetById(7);
 	    String oldName = pet7.getName();
 	    
